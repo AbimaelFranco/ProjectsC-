@@ -25,10 +25,10 @@ class Program
                     UpdatePerson();
                     break;
                 case "4":
-                    // DeletePereson();
+                    DeletePerson();
                     break;
                 case "5":
-                    break;
+                    return;
                 default:
                     Console.WriteLine("Opcion no valida");
                     break;
@@ -80,12 +80,12 @@ class Program
         int id = int.Parse(Console.ReadLine());
 
         Console.Write("Nuevo nombre: ");
-        int name = Console.ReadLine();
+        string name = Console.ReadLine();
 
         Console.Write("Nueva edad: ");
         int age = int.Parse(Console.ReadLine());
 
-        using SqlBulkCopyConnection conn = new(connectionString);
+        using SqlConnection conn = new(connectionString);
         conn.Open();
 
         string query = "UPDATE Personas SET Nombre = @name, Edad = @age WHERE Id = @id";
@@ -98,12 +98,12 @@ class Program
         Console.WriteLine($"{filas} persona(s) actualizada(s)");
     }
 
-    static void DeletePersona()
+    static void DeletePerson()
     {
         Console.Write("ID de la persona a eliminar:");
         int id = int.Parse(Console.ReadLine());
 
-        using SQLConnection conn = new(connectionString);
+        using SqlConnection conn = new(connectionString);
         conn.Open();
 
         string query = "DELETE FROM Personas WHERE ID = @id";
