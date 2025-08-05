@@ -19,10 +19,10 @@ class Program
                     CreatePerson();
                     break;
                 case "2":
-                    // ReadPerson();
+                    ReadPerson();
                     break;
                 case "3":
-                    // UpdatePerson();
+                    UpdatePerson();
                     break;
                 case "4":
                     // DeletePereson();
@@ -47,7 +47,7 @@ class Program
         using SqlConnection conn = new(connectionString);
         conn.Open();
 
-        String query = "INSERT INTO Peresonas (Nombre, Edad) VALUES (@name, @age)";
+        String query = "INSERT INTO Personas (Nombre, Edad) VALUES (@name, @age)";
         using SqlCommand cmd = new(query, conn);
         cmd.Parameters.AddWithValue("@name", name);
         cmd.Parameters.AddWithValue("@age", age);
@@ -57,5 +57,44 @@ class Program
 
 
 
+    }
+
+    static void ReadPerson()
+    {
+        using SqlConnection conn = new(connectionString);
+        conn.Open();
+
+        string query = "SELECT * FROM Personas";
+        using SqlCommand cmd = new(query, conn);
+        using SqlDataReader reader = cmd.ExecuteReader();
+
+        while (reader.Read())
+        {
+            Console.WriteLine($"ID: {reader["Id"]}, Nombre: {reader["Nombre"]}, Edad: {reader["Edad"]}");
+        }
+    }
+
+    static void UpdatePerson()
+    {
+        Console.Write("ID de la persona a actualizar: ");
+        int id = int.Parse(Console.ReadLine());
+
+        Console.Write("Nuevo nombre: ");
+        int name = Console.ReadLine();
+
+        Console.Write("Nueva edad: ");
+        int age = int.Parse(Console.ReadLine());
+
+        using SqlBulkCopyConnection conn = new(connectionString);
+        conn.Open();
+
+        string query = "UPDATE Personas SET Nombre = @name, Edad = @age WHERE Id = @id";
+        using SqlCommand cmd = new(query, conn);
+        cmd.Parameters.AddWithValue("@name", name);
+        cmd.Parameters.AddWithValue("@age", age);
+        cmd.Parameters.AddWithValue("@id", id);
+
+        int filas = cmd.ExecuteNonQuery();
+        Console.WriteLine($"{filas} persona(s) actualizada(s)");
     }
 }
