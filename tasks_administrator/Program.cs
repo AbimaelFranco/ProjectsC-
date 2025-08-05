@@ -97,4 +97,20 @@ class Program
         int filas = cmd.ExecuteNonQuery();
         Console.WriteLine($"{filas} persona(s) actualizada(s)");
     }
+
+    static void DeletePersona()
+    {
+        Console.Write("ID de la persona a eliminar:");
+        int id = int.Parse(Console.ReadLine());
+
+        using SQLConnection conn = new(connectionString);
+        conn.Open();
+
+        string query = "DELETE FROM Personas WHERE ID = @id";
+        using SqlCommand cmd = new(query, conn);
+        cmd.Parameters.AddWithValue("@id", id);
+
+        int filas = cmd.ExecuteNonQuery();
+        Console.WriteLine($"{filas} persona(s) eliminada(s)");
+    }
 }
