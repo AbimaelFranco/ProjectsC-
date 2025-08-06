@@ -15,18 +15,8 @@ public class Kata
     /// </returns>
     public static string Remove_char(string s)
     {
-        string resultado = "";
         if (s.Length <= 2)
-        {
             return "";
-        }
-        else
-        {
-            for (int i = 1; i < s.Length - 1; i++)
-            {
-                resultado += s[i];
-            }
-            return resultado;
-        }
+        return s.Substring(1, s.Length - 2);
     }
 }
