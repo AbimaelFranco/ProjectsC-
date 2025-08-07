@@ -20,7 +20,7 @@ class Program
                     CreateTask();
                     break;
                 case "2":
-                    // ShowTask();
+                    ShowTask();
                     break;
                 case "3":
                     // UpdateTask();
@@ -35,7 +35,7 @@ class Program
         }
     }
 
-    static void ConexionSQL(string action, string name, string description, string status)
+    static void ConexionSQL(string action, string name = "", string description = "", string status = "")
     {
         using SqlConnection conn = new(connectionString);
         conn.Open();
@@ -53,10 +53,23 @@ class Program
                     Console.WriteLine("Accion realizada correctamente");
                     break;
                 }
+            case "read":
+                {
+                    string query = "SELECT * FROM tasks";
+                    using SqlCommand cmd = new(query, conn);
+                    using SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Console.WriteLine($"ID: {reader["Id"]} - Tarea: {reader["Task"]} - Descripcion {reader["Descripcion"]} - Estado{reader["Estatus"]} -");
+                    }
+                    break;
+                }
             default:
                 Console.WriteLine("Accion no valida");
                 return;
         }
+
 
     }
 
@@ -73,6 +86,11 @@ class Program
 
         ConexionSQL("create", name, description, status);
 
+    }
+
+    static void ShowTask()
+    {
+        ConexionSQL("read");
     }
 
 }
