@@ -26,9 +26,7 @@ public class Kata
             for (int j = -1; j <= 1; j++)
             {
                 if (i == 0 && j == 0) continue;
-                x_value = x + i;
-                y_value = y + j;
-                lista.Add(new int[] { x_value, y_value });
+                lista.Add(new int[] { x + i, y + j });
             }
         }
         return lista;
