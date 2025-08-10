@@ -18,8 +18,6 @@ public class Kata
 {
     public static IEnumerable<int[]> cartesianNeighbor(int x, int y)
     {
-        int x_value = 0;
-        int y_value = 0;
         List<int[]> lista = new List<int[]>();
         for (int i = -1; i <= 1; i++)
         {
